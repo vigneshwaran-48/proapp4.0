@@ -5,7 +5,6 @@
 .project-overview-left-page{
     width: 59%;
     height: 100%;
-    /* border: 1px solid rgba(0, 0, 0, 0.4); */
     justify-content: space-between;
 }
 .project-overview-right-page{
@@ -17,6 +16,7 @@
     width: 97%;
     justify-content: space-around;
     height: 7%;
+    min-height: 45px;
     border-radius: 15px;
 }
 .common-project-overview-navbar{
@@ -44,12 +44,14 @@
     position: absolute;
     transform: translateX(100%);
     justify-content: space-between;
+    padding-bottom: 0px;
 }
 .project-overview-details-info, .project-overview-details-tasks{
     width: 100%;
     height: 340px;
     padding: 10px;
     border-radius: 15px;
+    margin-bottom: 10px;
 }
 .single-project-info-div{
     width: 100%;
@@ -92,23 +94,27 @@
     /* border: 1px solid; */
     overflow: scroll;
 }
-.project-description::-webkit-scrollbar {
+.project-description::-webkit-scrollbar, .project-overview-details-tasks-wrapper::-webkit-scrollbar {
     display: none;
 }
 .project-overview-details-tasks{
     height: 50%;
     align-items: flex-start;
     justify-content: space-between;
+    margin-bottom: 0;
 }
 .project-overview-details-tasks-wrapper {
     height: 90%;
     width: 100%;
-    /* border: 1px solid red; */
+    justify-content: flex-start;
+    overflow: scroll;
+}
+.project-overview-single-task{
+    max-width: 550px;
 }
 
 /* Right part of section style starts here */
 .project-overview-right-page{
-    /* border: 1px solid teal; */
     justify-content: space-between;
     padding: 15px;
     align-items: flex-start;
@@ -158,6 +164,21 @@
 }
 .stat-color-completed {
     background-color: green;
+}
+.project-stats-values-wrapper{
+    max-width: none;
+    width: 100%;
+    align-items: flex-start;
+}
+.all-progress-project-values-wrappers{
+    justify-content: flex-start;
+}
+.all-progress-values-wrappers{
+    overflow: scroll;
+    max-height: 220px;
+}
+.all-progress-values-wrappers::-webkit-scrollbar {
+    display: none;
 }
 /* Right part of section style ends here */
 
