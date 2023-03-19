@@ -91,7 +91,6 @@ let getCurrentUserDetails = async () => {
     }
     apiKeyResult = await sendGetRequest("user/getapikey");
     APIKEY = apiKeyResult.apiKey;
-    console.log(APIKEY);
     resetProjects();
     
 }

@@ -144,4 +144,41 @@ public class RetrieveProject {
 
         return result;
     }
+    public JSONObject retrieveProjectStatistics(Connection con, int pid) {
+        JSONObject jsonObject = new JSONObject();
+        
+        try {
+            int totalCount = 0;
+            int yetToStartCount = 0;
+            int onProgressCount = 0;
+            int completedCount = 0;
+            
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select status from tasks where pid = "+pid);
+
+            while (rs.next()) {
+                String status = rs.getString("status");
+                if (status.equals("Yet To Start")) {
+                    yetToStartCount++;
+                }
+                else if (status.equals("On Progress")) {
+                    onProgressCount++;
+                }
+                else if (status.equals("Completed")) {
+                    completedCount++;
+                } 
+                totalCount++;
+            }
+            jsonObject.put("total", totalCount);
+            jsonObject.put("yetToStart", yetToStartCount);
+            jsonObject.put("onProgress", onProgressCount);
+            jsonObject.put("completed", completedCount);
+            jsonObject.put("yetToStartPercentage", (yetToStartCount*100)/totalCount);
+            jsonObject.put("onProgressPercentage", (onProgressCount*100)/totalCount);
+            jsonObject.put("completedPercentage", (completedCount*100)/totalCount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
 }

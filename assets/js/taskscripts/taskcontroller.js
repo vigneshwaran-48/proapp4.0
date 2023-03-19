@@ -5,6 +5,9 @@ let TaskController = ((view, model) => {
         event.preventDefault();
         event.stopPropagation();
         let taskId = parseInt(event.target.id.slice(4));
+        if(!taskId){
+            taskId = parseInt(event.target.id.slice(13));
+        }
         event.target.nextElementSibling.classList.toggle(view.getDomStrings().finishTask);
         let formData = new FormData();
         formData.append("taskData", JSON.stringify({

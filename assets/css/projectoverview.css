@@ -187,14 +187,22 @@
     overflow: scroll;
     max-height: 220px;
 }
-.all-progress-values-wrappers::-webkit-scrollbar {
+.all-progress-values-wrappers::-webkit-scrollbar, .project-overview-tasks-wrapper::-webkit-scrollbar {
     display: none;
 }
 /* Right part of section style ends here */
 
 /* Task section styling starts here */
 .project-overview-tasks-body{
+    padding: 15px;
+}
+.project-overview-tasks-wrapper{
     border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+    padding: 10px;
+    overflow: scroll;
 }
 /* Task section styling ends here */
 

@@ -244,6 +244,16 @@
         <url-pattern>/project/user/delete</url-pattern>
     </servlet-mapping>
 
+    <!-- This is for getting project statistics -->
+    <servlet>
+        <servlet-name>RetrieveProjectStatistics</servlet-name>
+        <servlet-class>com.servlets.project.RetrieveProjectStatistics</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RetrieveProjectStatistics</servlet-name>
+        <url-pattern>/project/get-stats</url-pattern>
+    </servlet-mapping>
+
     <!-- taskadd -->
     <servlet>
         <servlet-name>AddTask</servlet-name>
