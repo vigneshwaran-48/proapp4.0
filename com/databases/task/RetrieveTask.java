@@ -118,15 +118,18 @@ public class RetrieveTask {
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select * from tasks where pid = "+pid);
+            RetrieveUser ru = new RetrieveUser();
             while (rs.next()) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("taskId", rs.getInt("tid"));
+                int tid = rs.getInt("tid");
+                jsonObject.put("taskId", tid);
                 jsonObject.put("taskName", rs.getString("tname"));
                 jsonObject.put("fromDate", rs.getString("fromdate"));
                 jsonObject.put("todate", rs.getString("todate"));
                 jsonObject.put("status", rs.getString("status"));
                 jsonObject.put("description", rs.getString("description"));
                 jsonObject.put("createdBy", rs.getString("created_by"));
+                jsonObject.put("users", ru.getUserDetailByTid(con, tid));
                 array.add(jsonObject);
             }
         } catch (Exception e) {
