@@ -26,11 +26,9 @@ let MainController = (view => {
         }
         
         let windows = [chatOuterWindow, profileOverviewWindow, settingsSection];
-        console.log(windows);
         windows.forEach(elem => {
             if(elem != activeElement){
                 elem.classList.remove(view.getDomStrings().showFromRightToLeft);
-                console.log(elem);
             }
         })
     }
@@ -54,6 +52,7 @@ let MainController = (view => {
     let init = () => {
         //Adding this listener for right side section
         _(view.getDomStrings().profileButton).addEventListener("click", event => {
+            event.stopPropagation();
             view.loadStatisticsData();
             _(view.getDomStrings().chatMembersCloseButton).click();
             _(ChatView.getDomStrings().chattingWindowCloseButton).click();
@@ -64,11 +63,13 @@ let MainController = (view => {
 
         //This is for closing right side section
         _(view.getDomStrings().rightSideCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().rightSection).classList.remove(view.getDomStrings().showFromRightToLeft);
         })
         //This is for opening add form section
         _(view.getDomStrings().newButton).addEventListener("click", event => {
             //Setting default date values as today 
+            event.stopPropagation();
             _(FormView.getDomStrings().fromDateInputTag).valueAsDate = new Date();
             _(FormView.getDomStrings().toDateInputTag).valueAsDate = new Date();
 
@@ -91,6 +92,7 @@ let MainController = (view => {
         });
         //This is for closing add form section
         _(view.getDomStrings().formCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().rightSideCloseButton).click();
             FormController.resetForm();
             if(_(FormView.getDomStrings().peopleAddingLabel).id == "opened"){
@@ -101,6 +103,7 @@ let MainController = (view => {
 
         //This is for form adding button
         _(view.getDomStrings().formCreatingButton).addEventListener("click", event => {
+            event.stopPropagation();
             let result = FormController.validateForm();
             if(result.status){
                 if(CURRENTSECTION == "Project"){
@@ -117,14 +120,17 @@ let MainController = (view => {
         });
         //This is for error popup message closing button 
         _(view.getDomStrings().errorMessageCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().errorMessageDiv).classList.remove(view.getDomStrings().showPopupMessage);
         });
         //This is for success popup message closing button 
         _(view.getDomStrings().successMessageCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().successMessageDiv).classList.remove(view.getDomStrings().showPopupMessage);
         });
         //This is for popup message closing button 
         _(view.getDomStrings().popupCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().popupWindow).classList.remove(view.getDomStrings().showPopupMessage);
         });
 
@@ -137,6 +143,7 @@ let MainController = (view => {
         });
         //This is for opening in completed boxes wrapper button 
         _(view.getDomStrings().completedBoxButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().completedSection).classList.add(view.getDomStrings().showBoxWrapperSection);
             //Removing other sections
             _(view.getDomStrings().yetToStartSection).classList.remove(view.getDomStrings().showBoxWrapperSection);
@@ -144,6 +151,7 @@ let MainController = (view => {
         });
         //This is for opening in yet to start boxes wrapper button 
         _(view.getDomStrings().yetToStartButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().yetToStartSection).classList.add(view.getDomStrings().showBoxWrapperSection);
             //Removing other sections
             _(view.getDomStrings().completedSection).classList.remove(view.getDomStrings().showBoxWrapperSection);
@@ -151,15 +159,18 @@ let MainController = (view => {
         });
         //This is for closing description section
         _(view.getDomStrings().descriptionCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().fullDescriptionSection).classList.remove (view.getDomStrings().showFromRightToLeft);
         }); 
         //This is for closing edit section
         _(view.getDomStrings().editBoxCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().fullEditSection).classList.remove(view.getDomStrings().showFromRightToLeft);
         });
 
         //This is for opening projects section
         _(view.getDomStrings().projectSectionButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().projectSectionButton).classList.add(view.getDomStrings().iconClickEffect);
             resetIconEffect(_(view.getDomStrings().projectSectionButton));
             _(ChatView.getDomStrings().chattingWindowCloseButton).click();
@@ -176,6 +187,7 @@ let MainController = (view => {
         
         //This is for opening task section 
         _(view.getDomStrings().taskSectionButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().taskSectionButton).classList.add(view.getDomStrings().iconClickEffect);
             resetIconEffect(_(view.getDomStrings().taskSectionButton));
             _(ChatView.getDomStrings().chattingWindowCloseButton).click();
@@ -193,6 +205,7 @@ let MainController = (view => {
          });
         //This is for opening chat people view
         _(view.getDomStrings().chatButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().settingCloseButton).click();
             _(view.getDomStrings().rightSideCloseButton).click();
             _(view.getDomStrings().chatButton).classList.add(view.getDomStrings().iconClickEffect);
@@ -203,6 +216,7 @@ let MainController = (view => {
         });
         //This is to close the chat people view
         _(view.getDomStrings().chatMembersCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().chatPeopleViewSection).classList.remove(view.getDomStrings().showFromRightToLeft);
             _(view.getDomStrings().chatButton).classList.remove(view.getDomStrings().iconClickEffect);
         });
@@ -224,6 +238,7 @@ let MainController = (view => {
 
         //This is for closing settings page
         _(view.getDomStrings().settingCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().settingSection).classList.remove(view.getDomStrings().showFromRightToLeft);
         });
 
@@ -231,6 +246,7 @@ let MainController = (view => {
         _(view.getDomStrings().overDueIcon).addEventListener("click", event => {
             _(view.getDomStrings().overDueIcon).classList.add(view.getDomStrings().iconClickEffect);
             resetIconEffect(_(view.getDomStrings().overDueIcon));
+            event.stopPropagation();
             _(ChatView.getDomStrings().chattingWindowCloseButton).click();
             _(view.getDomStrings().overDueSection).classList.add(view.getDomStrings().showFromScale);
             CURRENTSECTION = "OverDue";
@@ -246,6 +262,7 @@ let MainController = (view => {
 
         //This is for handling top profile and notification button's actions
         _(view.getDomStrings().topProfilePhotoLabel).addEventListener("click", event => {
+            event.stopPropagation();
             if(_(view.getDomStrings().notificationLabel).nextElementSibling.checked){
                 _(view.getDomStrings().notificationLabel).click();
             }  

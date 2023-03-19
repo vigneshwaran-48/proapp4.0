@@ -83,6 +83,7 @@ let FormController = (view => {
     }
     //This is for people adding label click action
     _(view.getDomStrings().peopleAddingLabel).addEventListener("click", async event => {
+        event.stopPropagation();
         if(!event.target.nextElementSibling.checked){
             _(view.getDomStrings().peopleAddingLabel).id = "opened";
             if(CURRENTSECTION != "Project"){
@@ -138,6 +139,8 @@ let FormController = (view => {
 
     //This is for people editing label click action
     _(view.getDomStrings().peopleEditLabel).addEventListener("click", async event => {
+        event.stopPropagation();
+        console.log("hi")
         if(!event.target.nextElementSibling.checked){
             _(view.getDomStrings().peopleEditLabel).id = "opened";
             if(CURRENTSECTION != "Project"){
@@ -171,6 +174,7 @@ let FormController = (view => {
     }
     //This is for box updating button
     _(view.getDomStrings().editBoxButton).addEventListener("click", async event => {
+        event.stopPropagation();
         let formData = new FormData();
         let peopleInput = Array.from(document.getElementsByName("selected-people")).filter(elem => {
             return elem.checked;

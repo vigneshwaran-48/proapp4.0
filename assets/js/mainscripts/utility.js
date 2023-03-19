@@ -2,11 +2,35 @@ let _ = element => document.querySelector(element);
 
 let _All = element => document.querySelectorAll(element);
 
+let currentClickedElement = document;
+
+//This listener is for preventing tab button bug
 document.addEventListener("keydown", event => {
     if(event.code == "Tab"){
         event.preventDefault();
     }
 });
+
+//This listener is for autoclosing a element if another element is clicked
+document.addEventListener("click", event => {
+    
+    if(currentClickedElement != event.target){
+        try{
+            currentClickedElement.click();
+            currentClickedElement.nextElementSibling.checked = false;
+        }
+        catch(e){}
+        finally{
+            if(currentClickedElement == 0){
+                currentClickedElement = document;
+            }
+            else {
+                currentClickedElement = event.target;
+            }
+        }
+    }
+});
+
 let CURRENTSECTION = "Project";
 let USERID;
 let USERNAME;

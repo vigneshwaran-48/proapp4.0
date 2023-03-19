@@ -294,6 +294,16 @@
         <url-pattern>/task/getall</url-pattern>
     </servlet-mapping>
 
+    <!-- for getting the all task regarding to the project id -->
+    <servlet>
+        <servlet-name>GetAllTasksByPid</servlet-name>
+        <servlet-class>com.servlets.task.GetTasksByPid</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetAllTasksByPid</servlet-name>
+        <url-pattern>/task/getby-pid</url-pattern>
+    </servlet-mapping>
+
     <!-- for getting the all notification regarding to the user -->
     <servlet>
         <servlet-name>GetNotification</servlet-name>

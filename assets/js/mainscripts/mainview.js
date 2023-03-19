@@ -74,7 +74,10 @@ let MainView = (() => {
         emptyBoxMessage : "empty-message-box",
         centerTheBox : "center-the-box",
         topRightOptionsInput : "#top-profile-option-photo",
-        projectOverviewSection : ".middle-project-overview"
+        projectOverviewSection : ".middle-project-overview",
+        showButton : "show-button",
+        hideButton : "hide-button",
+        closeProjectOverViewButton : ".close-project-overview-button"
     }
     let getDomStrings = () => domStrings;
 
@@ -126,6 +129,10 @@ let MainView = (() => {
                 imageDiv.style.backgroundImage = `url(/ProApp/assets/images/usersImages/${elem.imagePath})`;
 
                 labelTag.append(imageDiv, p, getBoxFinishedIcon(isUserFinished));
+                labelTag.addEventListener("click", event => {
+                    console.log("hi");
+                    event.stopPropagation()
+                });
                 _(domStrings.descPeopleWrapper).append(labelTag);
             }
         });

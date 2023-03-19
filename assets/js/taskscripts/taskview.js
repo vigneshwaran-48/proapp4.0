@@ -189,6 +189,8 @@ let TaskView = (() => {
                                 if(event.target.tagName == "I"){
                                     event.preventDefault();
                                     event.stopPropagation();
+                                    // document.dispatchEvent(new Event("click"));
+                                    // currentClickedElement = event.target;
                                     if(event.target.parentElement.nextElementSibling.nextElementSibling.children.length > 1){
                                         event.target.parentElement.nextElementSibling.nextElementSibling.classList.toggle(ProjectView.getDomStrings().showBoxOptions); 
                                     }
@@ -214,6 +216,8 @@ let TaskView = (() => {
                                         event.target.nextElementSibling.nextElementSibling.classList.toggle(ProjectView.getDomStrings().showNormalUserBoxOption);
                                     }
                                 }
+                                document.dispatchEvent(new Event("click"));
+                                currentClickedElement = event.target;
                             }
                         });
                         //Inserting elements to its respective parent

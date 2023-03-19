@@ -124,6 +124,7 @@
                             </ul>
                         </div>
                         <button tabindex="-1" type="button" class="common-button add-project-task-button">Add</button>
+                        <button type="button" class="common-button close-project-overview-button hide-button">Close</button>
                     </header>
 
                     <!-- Project section body starts here -->
@@ -200,7 +201,7 @@
 
                                     <!-- Project overview details tasks section start here -->
                                     <div class="project-overview-details-tasks full-light-theme y-axis-flex">
-                                        <h2>Recently created Tasks</h2>
+                                        <h2>Deadline Tasks</h2>
                                         <div class="project-overview-details-tasks-wrapper y-axis-flex">
                                             <!-- Single task for project overview starts here -->
                                             <div class="single-task project-overview-single-task light-theme x-axis-flex">
@@ -271,7 +272,7 @@
                                     </div>
                                 </div>
                                 <div class="stats-values-wrapper project-stats-values-wrapper y-axis-flex">
-                                    <h3>Project Name</h3>
+                                    <h3 class="project-overview-stats-name">Project Name</h3>
                                     <div class="all-progress-values-wrappers all-progress-project-values-wrappers x-axis-flex">
                                         <div class="common-stat-box total-box y-axis-flex">
                                             <h4>Total</h4>
@@ -678,6 +679,11 @@
 <script src="assets/js/notificationscripts/notificationview.js"></script>
 <script src="assets/js/notificationscripts/notificationmodel.js"></script>
 <!-- Notification scripts ends here -->
+
+<!-- Project overview scripts starts here -->
+<script src="assets/js/projectoverviewscripts/projectoverviewview.js"></script>
+<script src="assets/js/projectoverviewscripts/projectoverviewcontroller.js"></script>
+<!-- Project overview scripts ends here -->
 
 <!-- Web socket scripts starts here -->
 <script src="assets/js/websocketscript/weblogic.js"></script>

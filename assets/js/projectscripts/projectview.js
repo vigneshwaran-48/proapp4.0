@@ -66,6 +66,24 @@ let ProjectView = (() => {
                 }
             })
     }
+
+    //This function is used to get the id of the mainbox 
+    let getMainBoxId = clickedElement => {
+        if(clickedElement.classList.contains(domStrings.mainBox)){
+            return clickedElement.id.slice(8);
+        }
+        else if(clickedElement.parentElement.classList.contains(domStrings.mainBox)){
+            return clickedElement.parentElement.id.slice(8);
+        }
+        else if(clickedElement.parentElement.parentElement.classList.contains(domStrings.mainBox)){
+            return clickedElement.parentElement.parentElement.id.slice(8);
+        }
+        else if(clickedElement.parentElement.parentElement.parentElement.classList.contains(domStrings.mainBox)){
+            return clickedElement.parentElement.parentElement.parentElement.id.slice(8);        }
+        else {
+            console.log("Can't find the id of clicked mainBox");
+        }
+    }
     
     let renderProjects = projects => {
 
@@ -75,21 +93,14 @@ let ProjectView = (() => {
         _(domStrings.completedSection).innerHTML = "";
         _(domStrings.overDueSection).innerHTML = "";
 
-        // _(domStrings.completedSection).classList.remove(MainView.getDomStrings().centerTheBox);
-        // _(domStrings.inProgressSection).classList.remove(MainView.getDomStrings().centerTheBox);
-        // _(domStrings.yetToStartSection).classList.remove(MainView.getDomStrings().centerTheBox);
-        // _(domStrings.overDueSection).classList.remove(MainView.getDomStrings().centerTheBox);
-
         projects.forEach(elem => {
             //Creating elements starts here
             let parentTag;
             let currentDate = new Date();
             let isOverdue = false;
-            
-            // console.log(currentDate .get+ ", " + elem.toDate);
-            // elem.status == "Completed"
+          
             let tempDate = currentDate.getFullYear() + "-";
-            tempDate += currentDate.getMonth() < 10 ? "0" + currentDate.getMonth() : currentDate.getMonth();
+            tempDate += (currentDate.getMonth() + 1) < 10 ? "0" + (currentDate.getMonth() + 1): (currentDate.getMonth() + 1);
             tempDate += "-" + currentDate.getDate();
             
             if(tempDate > elem.toDate){
@@ -129,6 +140,7 @@ let ProjectView = (() => {
             //Adding classes to the elements starts here 
             mainBox.classList.add(domStrings.mainBox);
             mainBox.classList.add("y-axis-flex");
+            mainBox.id = "project-" + elem.id;
 
             topBoxDetail.classList.add(domStrings.topBoxDetail);
             topBoxDetail.classList.add("x-axis-flex");
@@ -177,6 +189,9 @@ let ProjectView = (() => {
             boxPercentageValue.style.width = elem.percentage + "%";
 
             threeDotsWrapper.addEventListener("click", event => {
+                event.stopPropagation();
+                document.dispatchEvent(new Event("click"));
+                currentClickedElement = event.target;
                 if(event.target.id.startsWith("more")){
                     _(MainView.getDomStrings().fullDescriptionSection).classList.add(MainView.getDomStrings().showFromRightToLeft);
                     _(MainView.getDomStrings().fullEditSection).classList.remove(MainView.getDomStrings().showFromRightToLeft);
@@ -238,8 +253,15 @@ let ProjectView = (() => {
 
             //This listener is for getting the project overview page 
             mainBox.addEventListener("click", event => {
-                console.log("hi");
                 _(MainView.getDomStrings().projectOverviewSection).classList.add(MainView.getDomStrings().showFromScale);
+                _(MainView.getDomStrings().currentSectionHeading).textContent = ProjectModel.getDataById(getMainBoxId(event.target)).projectName;
+                _(MainView.getDomStrings().newButton).classList.add(MainView.getDomStrings().hideButton);
+                _(MainView.getDomStrings().closeProjectOverViewButton).classList.remove(MainView.getDomStrings().hideButton);
+                _(MainView.getDomStrings().closeProjectOverViewButton).classList.add(MainView.getDomStrings().showButton);
+                // event.stopPropagation();
+                document.dispatchEvent(new Event("click"));
+                currentClickedElement = 0;
+                ProjectOverviewView.renderProjectOverView(ProjectModel.getDataById(getMainBoxId(event.target)));
             }); 
 
 

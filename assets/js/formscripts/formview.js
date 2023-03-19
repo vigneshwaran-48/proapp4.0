@@ -86,6 +86,7 @@ let FormView = (() => {
                 imageDiv.style.backgroundImage = `url(/ProApp/assets/images/usersImages/${elem.imagePath})`;
 
                 labelTag.append(imageDiv, p, inputTag);
+                labelTag.addEventListener("click", event => event.stopPropagation());
                 addToElement.append(labelTag);
             }
         });

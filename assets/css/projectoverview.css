@@ -2,6 +2,15 @@
     transform: scale(0);
     transition: 0.5s;
 }
+.close-project-overview-button{
+    background-color: rgb(230,66,95);
+}
+.show-button {
+    display: block;
+}
+.hide-button {
+    display: none;
+}
 .project-overview-left-page{
     width: 59%;
     height: 100%;

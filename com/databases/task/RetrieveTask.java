@@ -112,4 +112,26 @@ public class RetrieveTask {
         
         return tids;
     }
+
+    public JSONArray retreiveTasksByPid(Connection con, int pid) {
+        JSONArray array = new JSONArray();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from tasks where pid = "+pid);
+            while (rs.next()) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("taskId", rs.getInt("tid"));
+                jsonObject.put("taskName", rs.getString("tname"));
+                jsonObject.put("fromDate", rs.getString("fromdate"));
+                jsonObject.put("todate", rs.getString("todate"));
+                jsonObject.put("status", rs.getString("status"));
+                jsonObject.put("description", rs.getString("description"));
+                jsonObject.put("createdBy", rs.getString("created_by"));
+                array.add(jsonObject);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return array;
+    }
 }
