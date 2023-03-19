@@ -171,6 +171,7 @@ let MainController = (view => {
         //This is for opening projects section
         _(view.getDomStrings().projectSectionButton).addEventListener("click", event => {
             event.stopPropagation();
+            _(view.getDomStrings().closeProjectOverViewButton).click();
             _(view.getDomStrings().projectSectionButton).classList.add(view.getDomStrings().iconClickEffect);
             resetIconEffect(_(view.getDomStrings().projectSectionButton));
             _(ChatView.getDomStrings().chattingWindowCloseButton).click();
@@ -188,6 +189,7 @@ let MainController = (view => {
         //This is for opening task section 
         _(view.getDomStrings().taskSectionButton).addEventListener("click", event => {
             event.stopPropagation();
+            _(view.getDomStrings().closeProjectOverViewButton).click();
             _(view.getDomStrings().taskSectionButton).classList.add(view.getDomStrings().iconClickEffect);
             resetIconEffect(_(view.getDomStrings().taskSectionButton));
             _(ChatView.getDomStrings().chattingWindowCloseButton).click();
@@ -244,6 +246,7 @@ let MainController = (view => {
 
         //This is for opening overdue section
         _(view.getDomStrings().overDueIcon).addEventListener("click", event => {
+            _(view.getDomStrings().closeProjectOverViewButton).click();
             _(view.getDomStrings().overDueIcon).classList.add(view.getDomStrings().iconClickEffect);
             resetIconEffect(_(view.getDomStrings().overDueIcon));
             event.stopPropagation();
@@ -261,12 +264,12 @@ let MainController = (view => {
         });
 
         //This is for handling top profile and notification button's actions
-        _(view.getDomStrings().topProfilePhotoLabel).addEventListener("click", event => {
-            event.stopPropagation();
-            if(_(view.getDomStrings().notificationLabel).nextElementSibling.checked){
-                _(view.getDomStrings().notificationLabel).click();
-            }  
-        });
+        // _(view.getDomStrings().topProfilePhotoLabel).addEventListener("click", event => {
+        //     event.stopPropagation();
+        //     if(_(view.getDomStrings().notificationLabel).nextElementSibling.checked){
+        //         _(view.getDomStrings().notificationLabel).click();
+        //     }  
+        // });
         // _(view.getDomStrings().notificationLabel).addEventListener("click", event => {
         //     if(_(view.getDomStrings().topProfilePhotoLabel).nextElementSibling.checked){
         //         _(view.getDomStrings().topProfilePhotoLabel).click();

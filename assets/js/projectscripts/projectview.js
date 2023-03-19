@@ -258,6 +258,7 @@ let ProjectView = (() => {
                 _(MainView.getDomStrings().newButton).classList.add(MainView.getDomStrings().hideButton);
                 _(MainView.getDomStrings().closeProjectOverViewButton).classList.remove(MainView.getDomStrings().hideButton);
                 _(MainView.getDomStrings().closeProjectOverViewButton).classList.add(MainView.getDomStrings().showButton);
+                _(ProjectOverviewView.getDomStrings().detailsSectionButton).click();
                 // event.stopPropagation();
                 document.dispatchEvent(new Event("click"));
                 currentClickedElement = 0;

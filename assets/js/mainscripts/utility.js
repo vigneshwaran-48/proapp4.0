@@ -17,7 +17,6 @@ document.addEventListener("click", event => {
     if(currentClickedElement != event.target){
         try{
             currentClickedElement.click();
-            currentClickedElement.nextElementSibling.checked = false;
         }
         catch(e){}
         finally{

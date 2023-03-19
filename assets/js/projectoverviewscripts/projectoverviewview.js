@@ -12,7 +12,17 @@ const ProjectOverviewView = (() => {
         projectStatsTotal : ".total-number-of-tasks",
         projectStatsCompleted : ".completed-tasks",
         projectStatsInProgress : ".in-progress-tasks",
-        projectStatsYetToStart : ".yet-to-start-tasks"
+        projectStatsYetToStart : ".yet-to-start-tasks",
+        deadLineTasksWrapper : ".project-overview-details-tasks-wrapper",
+        singleTask : "single-task",
+        deadLineSingleTask : "project-overview-single-task",
+        currentOverviewSection : "current-project-overview-section",
+        detailsSectionButton : ".project-overview-details",
+        taskSectionButton : ".project-overview-tasks",
+        usersSectionButton : ".project-overview-users",
+        detailsSection : ".project-overview-details-body",
+        taskSection : ".project-overview-tasks-body",
+        usersSection : ".project-overview-users-body"
     }
 
     let getDomStrings = () => domStrings;
@@ -30,21 +40,37 @@ const ProjectOverviewView = (() => {
             let tempDate = currentDate.getFullYear() + "-";
             tempDate += (currentDate.getMonth() + 1) < 10 ? "0" + (currentDate.getMonth() + 1): currentDate.getMonth() + 1;
             tempDate += "-" + currentDate.getDate();
-            console.log(tempDate + ", " + elem.todate);
-            return currentDate == elem.todate;
+            return tempDate == elem.todate;
         });
-        console.log(deadLineTasks);
+        _(domStrings.deadLineTasksWrapper).innerHTML = "";
+        deadLineTasks.forEach(elem => {
+            let singleTask = document.createElement("div");
+            let taskName = document.createElement("h2");
+            singleTask.classList.add(domStrings.singleTask);
+            singleTask.classList.add(domStrings.deadLineSingleTask);
+            singleTask.classList.add("light-theme");
+            singleTask.classList.add("x-axis-flex");
+            // let peopleWrapper = ProjectView.getPhotoSection()
+
+            taskName.textContent = elem.taskName;
+            singleTask.append(taskName);
+            _(domStrings.deadLineTasksWrapper).append(singleTask);
+        });
     }
-    let renderProjectOverView = projectDetails => {
-        //Setting contents of project details part here
+
+    let renderProjectDetails = async projectDetails => {
         _(domStrings.projectName).textContent = projectDetails.projectName;
         _(domStrings.projectDesc).textContent = projectDetails.projectDesc;
         _(domStrings.projectFromDate).textContent = projectDetails.fromDate;
         _(domStrings.projectLastDate).textContent = projectDetails.toDate;
         _(domStrings.projectStatusValue).textContent = projectDetails.percentage;
         _(domStrings.projectStatusDiv).style.width = projectDetails.percentage + "%";
-        _(domStrings.projectOwner).textContent = projectDetails.createdBy;
 
+        let userDeatils = await sendGetRequest("user/getusers?id=" + projectDetails.createdBy);
+        _(domStrings.projectOwner).textContent = userDeatils.userName;
+    }
+    let renderProjectOverView = projectDetails => {
+        renderProjectDetails(projectDetails);
         renderProjectStatsSection(projectDetails);
         renderProjectDeadLineTasks(projectDetails);
     }
