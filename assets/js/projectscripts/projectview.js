@@ -252,7 +252,7 @@ let ProjectView = (() => {
             });
 
             //This listener is for getting the project overview page 
-            mainBox.addEventListener("click", event => {
+            topBoxDetail.addEventListener("click", event => {
                 _(MainView.getDomStrings().projectOverviewSection).classList.add(MainView.getDomStrings().showFromScale);
                 _(MainView.getDomStrings().currentSectionHeading).textContent = ProjectModel.getDataById(getMainBoxId(event.target)).projectName;
                 _(MainView.getDomStrings().newButton).classList.add(MainView.getDomStrings().hideButton);

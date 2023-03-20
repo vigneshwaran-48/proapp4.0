@@ -11,9 +11,7 @@
     justify-content: flex-start;
     z-index: 31;
 }
-.show-from-scale{
-    transform: scale(1);
-}
+
 .single-projects-task-heading{
     width: 100%;
     font-size: 25px;

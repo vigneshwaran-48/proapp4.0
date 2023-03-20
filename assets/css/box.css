@@ -5,6 +5,13 @@
 .top-box-detail{
     width: 100%;
     justify-content: space-between;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.5s;
+}
+.top-box-detail:hover {
+    background-color: rgb(229, 233, 240);
 }
 .top-box-detail:nth-child(even){
     cursor: pointer;

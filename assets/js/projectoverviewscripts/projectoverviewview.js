@@ -96,6 +96,7 @@ const ProjectOverviewView = (() => {
     const renderTasks = async projectDetails => {
         const tasks = await sendGetRequest("task/getby-pid?projectId=" + projectDetails.id);
         console.log(tasks);
+        _(domStrings.tasksWrapper).innerHTML = "";
         tasks.forEach(task => {
             //Creating elements for a single task starts here
             let singleTask = document.createElement("div");

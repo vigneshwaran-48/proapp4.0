@@ -179,6 +179,7 @@
     max-width: none;
     width: 100%;
     align-items: flex-start;
+    overflow: scroll;
 }
 .all-progress-project-values-wrappers{
     justify-content: flex-start;
@@ -187,7 +188,7 @@
     overflow: scroll;
     max-height: 220px;
 }
-.all-progress-values-wrappers::-webkit-scrollbar, .project-overview-tasks-wrapper::-webkit-scrollbar {
+.all-progress-values-wrappers::-webkit-scrollbar, .project-overview-tasks-wrapper::-webkit-scrollbar, .project-stats-values-wrapper::-webkit-scrollbar {
     display: none;
 }
 /* Right part of section style ends here */
@@ -221,6 +222,11 @@
     .project-overview-details-info{
         height: 100%;
 
+    }
+}
+@media screen and (max-height: 650px) {
+    .project-stats-values-wrapper{
+        display: none;
     }
 }
 
