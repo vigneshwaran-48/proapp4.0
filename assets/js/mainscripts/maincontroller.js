@@ -204,6 +204,7 @@ let MainController = (view => {
             _(view.getDomStrings().taskSection).classList.add(view.getDomStrings().showFromScale);
             _(view.getDomStrings().descriptionCloseButton).click();
             _(view.getDomStrings().editBoxCloseButton).click();
+            TaskView.renderTasks(ProjectModel.getProjectsArray());
          });
         //This is for opening chat people view
         _(view.getDomStrings().chatButton).addEventListener("click", event => {
@@ -215,6 +216,7 @@ let MainController = (view => {
             _(view.getDomStrings().chatPeopleViewSection).classList.add(view.getDomStrings().showFromRightToLeft);
             _(view.getDomStrings().descriptionCloseButton).click();
             _(view.getDomStrings().editBoxCloseButton).click();
+            getMessagesOfUser();
         });
         //This is to close the chat people view
         _(view.getDomStrings().chatMembersCloseButton).addEventListener("click", event => {
@@ -263,6 +265,7 @@ let MainController = (view => {
             _(view.getDomStrings().editBoxCloseButton).click();
         });
 
+        _(view.getDomStrings().notificationLabel).addEventListener("click", resetNotification);
         //This is for handling top profile and notification button's actions
         // _(view.getDomStrings().topProfilePhotoLabel).addEventListener("click", event => {
         //     event.stopPropagation();

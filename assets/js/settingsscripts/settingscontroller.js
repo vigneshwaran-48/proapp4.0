@@ -5,20 +5,14 @@ let SettingsController = (view => {
         _(view.getDomStrings().editEmailIdInput).value = "";
         _(view.getDomStrings().editProfileOldPasswordInput).value = "";
         _(view.getDomStrings().editProfileNewPassword).value = "";
-        // _(view.getDomStrings().editPhotoInputTag).value = "";
     }
     let updateUserDetails = async event => {
+        event.stopPropagation();
         let formData = new FormData();
         let editName = _(view.getDomStrings().editProfileNameInput).value.trim();
         let editEmailIdInput = _(view.getDomStrings().editEmailIdInput).value.trim();
         let editProfileOldPasswordInput = _(view.getDomStrings().editProfileOldPasswordInput).value;
         let editProfileNewPasswordInput = _(view.getDomStrings().editProfileNewPassword).value;
-        // let editPhoto = _(view.getDomStrings().editPhotoInputTag).files[0];
-        // let isPhotoAvailable = false;
-        // if(editPhoto){
-        //     isPhotoAvailable = true;
-        //     formData.append("userImage", editPhoto);
-        // }
 
         let nameRegex = new RegExp("[^a-zA-Z0-9]");
         let emailRegex = new RegExp("^[a-zA-Z0-9.]{1,}@.{4,25}.com$");
@@ -36,12 +30,8 @@ let SettingsController = (view => {
                             newEmailId : editEmailIdInput,
                             oldPassword : editProfileOldPasswordInput,
                             newPassword : editProfileNewPasswordInput,
-                            uid : USERID,
-                            // isPhotoAvailable : isPhotoAvailable
+                            uid : USERID
                         }
-                        // if(isPhotoAvailable){
-                        //     obj.imageType =  "." + editPhoto.type.split("/")[1];
-                        // }
                         formData.append("updateData", JSON.stringify(obj));
                         let response = await sendPostRequest("user/update", formData);
                         if(response.result == "Success"){
@@ -78,16 +68,19 @@ let SettingsController = (view => {
         }); 
         //This is to open the profile editing section
         _(view.getDomStrings().settingsEditProfileButton).addEventListener("click", event => {
+            event.stopImmediatePropagation();
             _(view.getDomStrings().editProfileSection).classList.add(MainView.getDomStrings().showFromRightToLeft);
         });
         //This is to close the profile editing section
         _(view.getDomStrings().editProfileCloseButton).addEventListener("click", event => {
+            event.stopImmediatePropagation();
             _(view.getDomStrings().editProfileSection).classList.remove(MainView.getDomStrings().showFromRightToLeft);
         });
         //This is to update the user details
         _(view.getDomStrings().editProfileUpdateButton).addEventListener("click", updateUserDetails);
         //This is for change photo button
         _(view.getDomStrings().singleChangePhotoInput).addEventListener("change", async event => {
+            event.stopImmediatePropagation();
             let formData = new FormData();
             let photo = _(view.getDomStrings().singleChangePhotoInput).files[0];
             formData.append("uid", USERID);
@@ -102,19 +95,18 @@ let SettingsController = (view => {
             }
             console.log(MainView.getDomStrings().topSmallImage);
             console.log(_(MainView.getDomStrings().topSmallImage));
-            // _(MainView.getDomStrings().topSmallImage).reload(true);
             resetUserDetails();
             resetUserDetails();
         });
 
         //This is for dislaying API key
         _(view.getDomStrings().apiKeyButton).addEventListener("click", async event => {
+            event.stopImmediatePropagation();
             if(_(view.getDomStrings().apiKeyButton).checked){
                 console.log("Getting API key ........");
                 let apiKeyResponse = await sendGetRequest("user/getapikey");
                 if(apiKeyResponse.status == "success"){
                     _(view.getDomStrings().apiKeyContent).textContent = apiKeyResponse.apiKey;
-                    // console.log(navigator.clipboard.readText());
                 }
                 else {
                     MainView.showErrorMessage("Oops, Something went wrong ....");
@@ -126,6 +118,7 @@ let SettingsController = (view => {
         });
         //This is for API key clipboard 
         _(view.getDomStrings().apiKeyClipBoard).addEventListener("click", event => {
+            event.stopImmediatePropagation();
             console.log(_(view.getDomStrings().apiKeyClipBoard).parentElement.children[0].innerText);
             navigator.clipboard.writeText(_(view.getDomStrings().apiKeyClipBoard).parentElement.children[0].innerText);
             MainView.showSuccessMessage("Copied to Clipboard");

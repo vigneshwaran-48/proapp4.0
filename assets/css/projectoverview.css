@@ -36,6 +36,7 @@
     padding: 7px 10px;
     transition: 0.5s;
     border-bottom: 5px solid white;
+    cursor: pointer;
 }
 .common-project-overview-navbar:hover {
     border-bottom: 5px solid rgb(63,142,238);

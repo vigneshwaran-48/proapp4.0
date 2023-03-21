@@ -120,7 +120,7 @@ public class RetrieveTask {
         JSONArray array = new JSONArray();
         try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from tasks where pid = "+pid);
+            ResultSet rs = stmt.executeQuery("select tasks.tid, tname, fromdate, todate, status, description, created_by, IsCompleted from tasks inner join task_relation on tasks.tid = task_relation.tid  where uid = "+uid+" and pid = "+pid);
             RetrieveUser ru = new RetrieveUser();
             while (rs.next()) {
                 JSONObject jsonObject = new JSONObject();
@@ -132,7 +132,7 @@ public class RetrieveTask {
                 jsonObject.put("status", rs.getString("status"));
                 jsonObject.put("description", rs.getString("description"));
                 jsonObject.put("createdBy", rs.getString("created_by"));
-                jsonObject.put("isCompleted", isCompletedGet(con, uid,tid));
+                jsonObject.put("isCompleted", Boolean.parseBoolean(String.valueOf(rs.getString("IsCompleted"))));
                 jsonObject.put("users", ru.getUserDetailByTid(con, tid));
                 array.add(jsonObject);
             }

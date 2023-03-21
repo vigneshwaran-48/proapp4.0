@@ -2,8 +2,8 @@ let TaskController = ((view, model) => {
 
     //This function is invoked whenever a task complete chekbox is clicked
     let finishTask = async event => {
-        event.preventDefault();
         event.stopPropagation();
+        // console.log(event.target.checked);
         let taskId = parseInt(event.target.id.slice(4));
         if(!taskId){
             taskId = parseInt(event.target.id.slice(13));

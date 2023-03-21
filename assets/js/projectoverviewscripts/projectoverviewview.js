@@ -24,7 +24,8 @@ const ProjectOverviewView = (() => {
         taskSection : ".project-overview-tasks-body",
         usersSection : ".project-overview-users-body",
         statCircle : ".project-overview-right-page-outer-circle",
-        tasksWrapper : ".project-overview-tasks-wrapper"
+        tasksWrapper : ".project-overview-tasks-wrapper",
+        singleOverviewTask : "single-overview-task"
     }
 
     const getDomStrings = () => domStrings;
@@ -81,6 +82,13 @@ const ProjectOverviewView = (() => {
         });
     }
 
+    const removeTask = taskId => {
+        const displayingTasks = _All("." + domStrings.singleOverviewTask);
+        displayingTasks.forEach(elem => {
+            elem.id.slice(24) == taskId ? elem.remove() : 0;
+        });
+    }
+
     const renderProjectDetails = async projectDetails => {
         _(domStrings.projectName).textContent = projectDetails.projectName;
         _(domStrings.projectDesc).textContent = projectDetails.projectDesc;
@@ -122,9 +130,11 @@ const ProjectOverviewView = (() => {
 
             //Adding classes to created task components starts here
             singleTask.classList.add(TaskView.getDomStrings().singleTask);
+            singleTask.classList.add(domStrings.singleOverviewTask);
             singleTask.classList.add("light-theme");
             singleTask.classList.add("x-axis-flex");
-
+            singleTask.id = "single-task-overview-id-" + task.taskId;
+            
             taskNameCheckboxWrapper.classList.add(TaskView.getDomStrings().taskNameCheckboxWrapper);
             taskNameCheckboxWrapper.classList.add("x-axis-flex");
             taskCheckBox.classList.add(TaskView.getDomStrings().taskCheckBox);
@@ -156,18 +166,23 @@ const ProjectOverviewView = (() => {
             }
 
             //Adding contents and listeners to the created elements
-            taskCheckBox.addEventListener("click", TaskController.finishTask);
+            taskCheckBox.addEventListener("click", event => {
+                event.stopPropagation();
+                TaskController.finishTask(event);
+            });
             taskHeadingTag.textContent = task.taskName.slice(0, 15);
             taskTrashIconSpan.addEventListener("click", event => {
                 event.preventDefault();
                 event.stopPropagation();
                 console.log(event.target.id.slice(20));
                 TaskController.deleteTask(event.target.id.slice(20));
+                removeTask(event.target.id.slice(20));
             });
             taskExitIconSpan.addEventListener("click", event => {
                 event.preventDefault();
                 event.stopPropagation();
                 TaskController.exitTask(event.target.id.slice(20));
+                removeTask(event.target.id.slice(20));
             });
             
             //Inserting elements to its respective parent

@@ -83,11 +83,10 @@ let getCurrentUserDetails = async () => {
             _(".big-profile-image").style.backgroundImage = `url(/ProApp/assets/images/usersImages/${CURRENTUSERPHOTO})`;
             _(".top-profile-image-desktop").style.backgroundImage = `url(/ProApp/assets/images/usersImages/${CURRENTUSERPHOTO})`;
             _(".current-user-name").textContent = USERNAME;
-            webSocket = new WebSocket("wss://10.52.0.38:9191/ProApp/chat?uid=" + USERID);
+            webSocket = new WebSocket("wss://192.168.1.8:9191/ProApp/chat?uid=" + USERID);
             webSocket.onmessage = (event) => {
                 processMessage(JSON.parse(event.data));
             }
-        resetNotification();
     }
     apiKeyResult = await sendGetRequest("user/getapikey");
     APIKEY = apiKeyResult.apiKey;
@@ -129,13 +128,10 @@ let resetProjects = async () => {
         resetTasks();
     }  
     ProjectView.renderProjects(ProjectModel.getProjectsArray());
-    resetTasks();
-    getMessagesOfUser();
 }
 let resetTasks = async () => {
     let response = await sendGetRequest("/ProApp/task/getall");
     TaskModel.resetTasks();
-    console.log(response);
     if(response && response.length){
         response.forEach(elem => {
             TaskModel.addTask(TaskModel.changeServerObject(elem, true), false);
@@ -162,19 +158,4 @@ let resetNotification = async () => {
     }
     NotificationView.renderNotifications(NotificationModel.getNotificationsArray());
 }
-// let note = Notification.requestPermission();
-// note.then(permission => {
-//     console.log(permission);
-//     if(permission == "granted"){
-//         let notification = new Notification("ProApp", {
-//             body: "Hello there",
-//             icon : "https://10.52.0.38:9191/ProApp/assets/images/logo.png",
-//             vibrate : [200, 100, 200],
-//         });
-//         notification.onclick = event => {
-//             window.open("https://10.52.0.38:9191/ProApp/home", "_blank");
-//         }
-//     }
-// })
-
 getCurrentUserDetails();
