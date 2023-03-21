@@ -19,6 +19,9 @@
         <listener-class>com.listener.ActiveUser</listener-class>
     </listener>
     <!-- login -->
+
+
+
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>com.servlets.login.Login</servlet-class>
@@ -389,7 +392,7 @@
 
 
     <!-- for the home filter -->
-    <filter>
+    <!-- <filter>
         <filter-name>ApiChecker</filter-name>
         <filter-class>com.filters.ApiKeyFilter</filter-class>
     </filter>
@@ -398,8 +401,18 @@
         <url-pattern>/project/getall,/user/getusers,/user/update,/user/changeimage,/user/getusers/project,/user/currentuser,/user/chats,/user/project/status,/user/task/status,/project/add,/project/delete,/project/getall,/project/update,/project/user/delete,/task/add,/task/delete,/task/update,/user/getusers/task,/task/getall,/notification/getall,/notification/add,/notification/delete,/task/user/delete,/task/user/changestatus
         
         </url-pattern>
+    </filter-mapping> -->
+
+
+
+       <filter>
+        <filter-name>ApiChecker</filter-name>
+        <filter-class>com.filters.ApiKeyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ApiChecker</filter-name>
+        <url-pattern>/user/getusers</url-pattern>
     </filter-mapping>
-   
 
 
     <!-- end -->

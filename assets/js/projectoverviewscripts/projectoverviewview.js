@@ -52,7 +52,7 @@ const ProjectOverviewView = (() => {
     }
 
     const renderProjectDeadLineTasks = async projectDetails => {
-        let tasks = await sendGetRequest("task/getby-pid?projectId=" + projectDetails.id);
+        let tasks = await sendGetRequest("task/getby-pid?projectId=" + projectDetails.id + "&userId=" + USERID);
         let deadLineTasks = tasks.filter(elem => {
             let currentDate = new Date();
             let tempDate = currentDate.getFullYear() + "-";
@@ -94,7 +94,7 @@ const ProjectOverviewView = (() => {
     }
 
     const renderTasks = async projectDetails => {
-        const tasks = await sendGetRequest("task/getby-pid?projectId=" + projectDetails.id);
+        const tasks = await sendGetRequest("task/getby-pid?projectId=" + projectDetails.id + "&userId=" + USERID);
         console.log(tasks);
         _(domStrings.tasksWrapper).innerHTML = "";
         tasks.forEach(task => {
@@ -150,6 +150,7 @@ const ProjectOverviewView = (() => {
             //Making the task div checked if it is completed here
             console.log(task.isCompleted);
             if(task.isCompleted){
+                
                 taskCheckBox.checked = true;
                 taskHeadingTag.classList.add(TaskView.getDomStrings().finishTask);
             }

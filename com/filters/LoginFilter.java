@@ -45,6 +45,7 @@ public class LoginFilter extends HttpFilter{
                     Connection conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/proapp", "vicky", "vi99g@NESH");
                     int uid=new RetrieveUser().getUidByEmail(conn, email);
                     session.setAttribute("uid", uid);
+                    System.out.println("---> uid setted");
                     session.setAttribute("userName", new RetrieveUser().getUnameByEmail(conn, email));
                     CopyOnWriteArrayList<Integer> activeUsers=(CopyOnWriteArrayList<Integer>)request.getServletContext().getAttribute("ActiveUsers");
                     activeUsers.add(uid);

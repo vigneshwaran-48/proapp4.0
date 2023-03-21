@@ -1,7 +1,6 @@
 package com.databases.users;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletRequest;
@@ -26,7 +25,7 @@ public class RetrieveUser {
         try {
             stmt = con.createStatement();
             rs = stmt.executeQuery(
-                    "select users.uid,uname,imagePath from task_relation inner join users on task_relation.uid=users.uid where tid =" + tid);
+                    "select users.uid, uname, imagePath from task_relation inner join users on task_relation.uid=users.uid where tid =" + tid);
 
             while (rs.next()) {
                 JSONObject jsObject = new JSONObject();

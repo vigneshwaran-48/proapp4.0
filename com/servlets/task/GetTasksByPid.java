@@ -17,7 +17,7 @@ public class GetTasksByPid extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             Connection con = (Connection) getServletContext().getAttribute("Connection");
-            response.getWriter().println(new RetrieveTask().retreiveTasksByPid(con, Integer.parseInt(request.getParameter("projectId"))));
+            response.getWriter().println(new RetrieveTask().retreiveTasksByPid(con, Integer.parseInt(request.getParameter("projectId")), Integer.parseInt(request.getParameter("userId"))));
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().println(new JSONObject().put("result", "An Error Occured"));

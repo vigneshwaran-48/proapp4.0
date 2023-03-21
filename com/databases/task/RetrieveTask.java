@@ -113,7 +113,10 @@ public class RetrieveTask {
         return tids;
     }
 
-    public JSONArray retreiveTasksByPid(Connection con, int pid) {
+
+   
+
+    public JSONArray retreiveTasksByPid(Connection con, int pid, int uid) {
         JSONArray array = new JSONArray();
         try {
             Statement stmt = con.createStatement();
@@ -129,6 +132,7 @@ public class RetrieveTask {
                 jsonObject.put("status", rs.getString("status"));
                 jsonObject.put("description", rs.getString("description"));
                 jsonObject.put("createdBy", rs.getString("created_by"));
+                jsonObject.put("isCompleted", isCompletedGet(con, uid,tid));
                 jsonObject.put("users", ru.getUserDetailByTid(con, tid));
                 array.add(jsonObject);
             }
@@ -136,5 +140,23 @@ public class RetrieveTask {
             e.printStackTrace();
         }
         return array;
+    } 
+    private boolean isCompletedGet(Connection c,int uid,int tid)
+    {
+        boolean result=false;
+        try {
+            Statement stmt=c.createStatement();
+            ResultSet rs=stmt.executeQuery("select IsCompleted from task_relation where uid="+uid+" && tid= "+tid);
+            rs.next();
+            System.out.println("userid:"+uid);
+            String val=rs.getString("IsCompleted");
+            System.out.println("result:"+val);
+            result=Boolean.valueOf(val);
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return result;
     }
 }

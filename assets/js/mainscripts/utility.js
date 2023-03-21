@@ -58,6 +58,7 @@ let sendGetRequest = async url => {
         let xhr = new XMLHttpRequest();
         let formData = new FormData();
         formData.append("userId", USERID);
+        
         xhr.open("GET", url);
         xhr.setRequestHeader("ApiKey", APIKEY);
         xhr.send(formData);
@@ -83,7 +84,7 @@ let getCurrentUserDetails = async () => {
             _(".big-profile-image").style.backgroundImage = `url(/ProApp/assets/images/usersImages/${CURRENTUSERPHOTO})`;
             _(".top-profile-image-desktop").style.backgroundImage = `url(/ProApp/assets/images/usersImages/${CURRENTUSERPHOTO})`;
             _(".current-user-name").textContent = USERNAME;
-            webSocket = new WebSocket("wss://192.168.1.8:9191/ProApp/chat?uid=" + USERID);
+            webSocket = new WebSocket("wss://10.52.0.38:9191/ProApp/chat?uid=" + USERID);
             webSocket.onmessage = (event) => {
                 processMessage(JSON.parse(event.data));
             }
@@ -102,6 +103,7 @@ let playNotificationSound = () => {
 let sendPostRequest = (url, data, stopParsing) => {
     return new Promise((resolved, rejected) => {
         let xhr = new XMLHttpRequest();
+        data.append("userId", USERID);
         xhr.open("POST", url);
         xhr.setRequestHeader("ApiKey", APIKEY);
         xhr.send(data);
