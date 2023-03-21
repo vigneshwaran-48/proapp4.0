@@ -58,7 +58,6 @@ let sendGetRequest = async url => {
         let xhr = new XMLHttpRequest();
         let formData = new FormData();
         formData.append("userId", USERID);
-        
         xhr.open("GET", url);
         xhr.setRequestHeader("ApiKey", APIKEY);
         xhr.send(formData);
@@ -103,7 +102,6 @@ let playNotificationSound = () => {
 let sendPostRequest = (url, data, stopParsing) => {
     return new Promise((resolved, rejected) => {
         let xhr = new XMLHttpRequest();
-        data.append("userId", USERID);
         xhr.open("POST", url);
         xhr.setRequestHeader("ApiKey", APIKEY);
         xhr.send(data);
