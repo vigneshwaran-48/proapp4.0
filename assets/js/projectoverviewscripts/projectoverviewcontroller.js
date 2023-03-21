@@ -1,6 +1,7 @@
 const ProjectOverviewController = (view => {
 
     let resetCurrentSection = currentSectionButton => {
+        console.log(currentSectionButton);
         let detailsSection = _(view.getDomStrings().detailsSectionButton);
         let taskSection = _(view.getDomStrings().taskSectionButton);
         let usersSection = _(view.getDomStrings().usersSectionButton);
@@ -13,6 +14,7 @@ const ProjectOverviewController = (view => {
         });
     }   
     let resetSections = currentSection => {
+        console.log(currentSection);
         let detailsSection = _(view.getDomStrings().detailsSection);
         let tasksSection = _(view.getDomStrings().taskSection);
         let usersSection = _(view.getDomStrings().usersSection);
@@ -55,6 +57,15 @@ const ProjectOverviewController = (view => {
             resetSections(_(view.getDomStrings().taskSection));
             _(view.getDomStrings().taskSection).classList.add(MainView.getDomStrings().showFromRightToLeft);
         });
+
+        //This is for opening users section 
+        _(view.getDomStrings().usersSectionButton).addEventListener("click", event => {
+            event.stopPropagation();
+            _(view.getDomStrings().usersSectionButton).classList.add(view.getDomStrings().currentOverviewSection);
+            resetCurrentSection(_(view.getDomStrings().usersSectionButton));
+            resetSections(_(view.getDomStrings().usersSection));
+            _(view.getDomStrings().usersSection).classList.add(MainView.getDomStrings().showFromRightToLeft);
+        })
     }
     init();
 })(ProjectOverviewView);

@@ -25,7 +25,14 @@ const ProjectOverviewView = (() => {
         usersSection : ".project-overview-users-body",
         statCircle : ".project-overview-right-page-outer-circle",
         tasksWrapper : ".project-overview-tasks-wrapper",
-        singleOverviewTask : "single-overview-task"
+        singleOverviewTask : "single-overview-task",
+        userDiv : "single-project-overview-user",
+        userImageDiv : "single-project-overview-user-image",
+        userNamePara : "single-project-overview-user-name",
+        userDeleteSpan : "single-project-overview-user-delete-button",
+        userDeleteIcon : ["fa-solid", "fa-trash"],
+        userChatButton : "project-overview-chat-button",
+        usersList : ".project-overview-users-body-users-list"
     }
 
     const getDomStrings = () => domStrings;
@@ -99,6 +106,40 @@ const ProjectOverviewView = (() => {
 
         let userDeatils = await sendGetRequest("user/getusers?id=" + projectDetails.createdBy);
         _(domStrings.projectOwner).textContent = userDeatils.userName;
+    }
+
+    const createUserDiv = userDetails => {
+        let userDiv = document.createElement("div");
+        let userImageDiv = document.createElement("div");
+        let userNamePara = document.createElement("p");
+        let userDeleteSpan = document.createElement("span");
+        let userDeleteIcon = document.createElement("i");
+        let userChatButton = document.createElement("button");
+
+        userDiv.classList.add(domStrings.userDiv);
+        userDiv.classList.add("x-axis-flex");
+        userDiv.classList.add("light-theme");
+
+        userImageDiv.classList.add(domStrings.userImageDiv);
+        userImageDiv.classList.add("full-light-theme");
+
+        userNamePara.classList.add(domStrings.userNamePara);
+        userDeleteSpan.classList.add(domStrings.userDeleteSpan);
+        domStrings.userDeleteIcon.forEach(elem => userDeleteIcon.classList.add(elem));
+        userChatButton.classList.add(domStrings.userChatButton);
+        userChatButton.classList.add("common-button");
+
+        userChatButton.type = "button";
+        userChatButton.textContent = "Chat";
+        userImageDiv.style.backgroundImage =   `url(/ProApp/assets/images/usersImages/${userDetails.imagePath})`;
+        userNamePara.textContent = userDetails.userName;
+        userDeleteSpan.id = "project-overview-user-" + userDetails.userId;
+        userDeleteIcon.id = "project-overview-user-" + userDetails.userId;
+
+        userDeleteSpan.append(userDeleteIcon);
+        userDiv.append(userImageDiv, userNamePara, userDeleteSpan, userChatButton);
+
+        return userDiv;
     }
 
     const renderTasks = async projectDetails => {
@@ -202,12 +243,19 @@ const ProjectOverviewView = (() => {
         });
     }
 
+    const renderUserSection = userDetails => {
+        _(domStrings.usersList).innerHTML = "";
+        userDetails.forEach(elem => {
+            _(domStrings.usersList).append(createUserDiv(elem));
+        });
+    }
 
     const renderProjectOverView = projectDetails => {
         renderProjectDetails(projectDetails);
         renderProjectStatsSection(projectDetails);
         renderProjectDeadLineTasks(projectDetails);
         renderTasks(projectDetails);
+        renderUserSection(projectDetails.users);
     }
 
     return {
