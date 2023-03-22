@@ -35,6 +35,7 @@ let ChatView = (() => {
     let getDomStrings = () => domStrings;
 
     let renderChattingWindow = async event => {
+        event.stopPropagation();
         _(domStrings.chatPeopleStatus).classList.remove(domStrings.activeStatusMessage);
         _(domStrings.chatPeopleStatus).classList.remove(domStrings.offlineStatusMessage);
         let userDetails = await sendGetRequest("user/getusers?id=" + event.target.dataset.userId);

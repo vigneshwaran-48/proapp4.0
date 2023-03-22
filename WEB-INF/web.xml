@@ -237,7 +237,7 @@
         <url-pattern>/project/update</url-pattern>
     </servlet-mapping>
 
-    <!-- for deleting the project associated user -->
+    <!-- for deleting the project associated user and returning remaining user-->
     <servlet>
         <servlet-name>RemoveProjectRelation</servlet-name>
         <servlet-class>com.servlets.project.RemoveProjectRelation</servlet-class>
@@ -245,6 +245,16 @@
     <servlet-mapping>
         <servlet-name>RemoveProjectRelation</servlet-name>
         <url-pattern>/project/user/delete</url-pattern>
+    </servlet-mapping>
+
+    <!-- for deleting the project associated user only -->
+    <servlet>
+        <servlet-name>RemoveUserFromProject</servlet-name>
+        <servlet-class>com.servlets.project.RemoveUserFromProject</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RemoveUserFromProject</servlet-name>
+        <url-pattern>/project/user/remove</url-pattern>
     </servlet-mapping>
 
     <!-- This is for getting project statistics -->
@@ -405,7 +415,7 @@
 
 
 
-       <filter>
+    <filter>
         <filter-name>ApiChecker</filter-name>
         <filter-class>com.filters.ApiKeyFilter</filter-class>
     </filter>

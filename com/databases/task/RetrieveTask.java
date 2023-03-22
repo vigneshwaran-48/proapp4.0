@@ -113,9 +113,6 @@ public class RetrieveTask {
         return tids;
     }
 
-
-   
-
     public JSONArray retreiveTasksByPid(Connection con, int pid, int uid) {
         JSONArray array = new JSONArray();
         try {
@@ -154,7 +151,6 @@ public class RetrieveTask {
             result=Boolean.valueOf(val);
             
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
         }
         return result;

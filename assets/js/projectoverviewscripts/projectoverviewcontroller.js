@@ -26,6 +26,34 @@ const ProjectOverviewController = (view => {
             }
         })
     }
+    //This is for user removing action 
+    let removeUser = async userId => {
+        let projectId = _(view.getDomStrings().usersList).dataset.currentProjectId;
+        const formData = new FormData();
+        const userDetails = {
+            projectId : projectId,
+            userId : userId
+        };
+        formData.append("userData", JSON.stringify(userDetails));
+        let response = await sendPostRequest("project/user/remove", formData);
+        if(response.status == "success"){
+            MainView.showSuccessMessage("User removed successfully");
+            view.removeUser(userId);
+        }
+        else {
+            MainView.showErrorMessage("Oops, Something went wrong");
+        }
+    }
+
+    //This is for opening chat of the user action 
+    let openChatOfUser = async userId => {
+        _(ChatView.getDomStrings().chattingWindowCloseButton).click();
+        let users = await sendGetRequest("user/getusers?id=all");
+        ChatView.renderChatPeople(users);
+        Array.from(_(ChatView.getDomStrings().chatAllPeopleWrapper).children).forEach(elem => {
+            elem.dataset.userId == userId ? elem.click() : 0;
+        });
+    }
     
     let init = () => {
         
@@ -65,7 +93,13 @@ const ProjectOverviewController = (view => {
             resetCurrentSection(_(view.getDomStrings().usersSectionButton));
             resetSections(_(view.getDomStrings().usersSection));
             _(view.getDomStrings().usersSection).classList.add(MainView.getDomStrings().showFromRightToLeft);
-        })
+        });
+
     }
     init();
+
+    return {
+        removeUser : removeUser,
+        openChatOfUser : openChatOfUser
+    }
 })(ProjectOverviewView);

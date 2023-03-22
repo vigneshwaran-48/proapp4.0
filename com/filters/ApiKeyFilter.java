@@ -19,40 +19,27 @@ public class ApiKeyFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
-
-        
         try {
-            System.out.println(" i am from filter apikey");
             Connection conn = (Connection) req.getServletContext().getAttribute("Connection");
             long uid = 0;
 
             String apikey = "";
 
             try {
-
                 try {
                     uid = Long.parseLong(String.valueOf(req.getSession().getAttribute("uid")));
                 } catch (Exception e) {
-
                     uid = Long.parseLong(String.valueOf(req.getParameter("userId")));
-
                 }
-
             } catch (Exception e) {
-                // TODO: handle exception
                 e.printStackTrace();
-                
             }
 
             try {
                 apikey = req.getHeader("ApiKey");
             } catch (Exception e) {
-                // TODO: handle exception
                 e.printStackTrace();
-                
             }
-
-          
 
             try {
                 if (uid == 0) {
@@ -66,25 +53,20 @@ public class ApiKeyFilter extends HttpFilter {
     
                 } else if (apikey != null && uid!=0) {
                     if (new User().apiverification(conn, uid, apikey)) {
-                        System.out.println("filter passed");
+                        // System.out.println("filter passed");
                         chain.doFilter(req, res);
                     } else {
-                        System.out.println("i am from filter else");
+                        // System.out.println("i am from filter else");
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("status", "Invalid ApiKey or UserId ");
                         res.getWriter().println(jsonObject.toJSONString());
                     }
                 }
             } catch (Exception e) {
-                // TODO: handle exception
                 e.printStackTrace();
-                
             }
-   
-
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
-
     }
 }

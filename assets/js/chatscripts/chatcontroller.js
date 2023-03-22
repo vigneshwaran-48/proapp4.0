@@ -1,6 +1,7 @@
 let ChatController = ((view, model) => {
 
     let addMessage = event => {
+        event.stopPropagation();
         if(event.target.id == view.getDomStrings().chatSendIcon || event.key == "Enter"){
             let currentTime = new Date();
             let messageContent = _(view.getDomStrings().chatInput).innerText;
@@ -45,6 +46,7 @@ let ChatController = ((view, model) => {
     let init = () => {
         //This is for loading users when chat section button is clicked
         _(MainView.getDomStrings().chatButton).addEventListener("click", async event => {
+            event.stopPropagation();
             let users = await sendGetRequest("user/getusers?id=all");
             view.renderChatPeople(users);
         });
@@ -57,6 +59,7 @@ let ChatController = ((view, model) => {
         });
         //This is for closing chatting window
         _(view.getDomStrings().chattingWindowCloseButton).addEventListener("click", event => {
+            event.stopPropagation();
             _(view.getDomStrings().chattingWindow).classList.remove(MainView.getDomStrings().showFromRightToLeft);
         });
         //This is for sending message with  keyboard event

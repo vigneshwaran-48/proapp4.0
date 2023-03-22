@@ -108,7 +108,7 @@ const ProjectOverviewView = (() => {
         _(domStrings.projectOwner).textContent = userDeatils.userName;
     }
 
-    const createUserDiv = userDetails => {
+    const createUserDiv = (userDetails, createdBy) => {
         let userDiv = document.createElement("div");
         let userImageDiv = document.createElement("div");
         let userNamePara = document.createElement("p");
@@ -119,6 +119,7 @@ const ProjectOverviewView = (() => {
         userDiv.classList.add(domStrings.userDiv);
         userDiv.classList.add("x-axis-flex");
         userDiv.classList.add("light-theme");
+        userDiv.id = "project-overview-user-id-" + userDetails.userId; 
 
         userImageDiv.classList.add(domStrings.userImageDiv);
         userImageDiv.classList.add("full-light-theme");
@@ -128,15 +129,27 @@ const ProjectOverviewView = (() => {
         domStrings.userDeleteIcon.forEach(elem => userDeleteIcon.classList.add(elem));
         userChatButton.classList.add(domStrings.userChatButton);
         userChatButton.classList.add("common-button");
+        userChatButton.dataset.chatUserId = userDetails.userId;
 
         userChatButton.type = "button";
         userChatButton.textContent = "Chat";
-        userImageDiv.style.backgroundImage =   `url(/ProApp/assets/images/usersImages/${userDetails.imagePath})`;
+        userImageDiv.style.backgroundImage = `url(/ProApp/assets/images/usersImages/${userDetails.imagePath})`;
         userNamePara.textContent = userDetails.userName;
         userDeleteSpan.id = "project-overview-user-" + userDetails.userId;
         userDeleteIcon.id = "project-overview-user-" + userDetails.userId;
 
-        userDeleteSpan.append(userDeleteIcon);
+        userDeleteSpan.addEventListener("click", event => {
+            event.stopPropagation();
+            ProjectOverviewController.removeUser(event.target.id.slice(22));
+        });
+        userChatButton.addEventListener("click", event => {
+            event.stopPropagation();
+            ProjectOverviewController.openChatOfUser(event.target.dataset.chatUserId);
+        });
+
+        if(createdBy == USERID){
+            userDeleteSpan.append(userDeleteIcon);
+        }
         userDiv.append(userImageDiv, userNamePara, userDeleteSpan, userChatButton);
 
         return userDiv;
@@ -243,23 +256,31 @@ const ProjectOverviewView = (() => {
         });
     }
 
-    const renderUserSection = userDetails => {
+    const renderUserSection = (projectId, createdBy, userDetails) => {
         _(domStrings.usersList).innerHTML = "";
+        _(domStrings.usersList).dataset.currentProjectId = projectId;
         userDetails.forEach(elem => {
-            _(domStrings.usersList).append(createUserDiv(elem));
+            elem.userId != USERID ? _(domStrings.usersList).append(createUserDiv(elem, createdBy)) : 0;
         });
     }
 
+    const removeUser = userId => {
+        Array.from(_(domStrings.usersList).children).forEach(elem => {
+            elem.id.slice(25) == userId ? elem.remove() : 0;
+        });
+    }
+    
     const renderProjectOverView = projectDetails => {
         renderProjectDetails(projectDetails);
         renderProjectStatsSection(projectDetails);
         renderProjectDeadLineTasks(projectDetails);
         renderTasks(projectDetails);
-        renderUserSection(projectDetails.users);
+        renderUserSection(projectDetails.id, projectDetails.createdBy, projectDetails.users);
     }
 
     return {
         getDomStrings : getDomStrings,
-        renderProjectOverView : renderProjectOverView
+        renderProjectOverView : renderProjectOverView,
+        removeUser : removeUser
     }
 })();
