@@ -50,12 +50,29 @@ let ProjectController = ((view, model) => {
         }
     }
 
-    let addUserToProject = (userId, projectId) => {
+    let addUserToProject = async (userId, projectId) => {
         let formData = new FormData();
         formData.append("userId", userId);
         formData.append("projectId", projectId);
 
-        sendPostRequest("/ProApp/project/user/add", formData);
+        let response = await sendPostRequest("/ProApp/project/user/add", formData);
+        if(response.status){
+            MainView.showSuccessMessage("User added to Project successfully");
+            const {users, createdBy} = model.getDataById(projectId);
+            let userDetails = users.find(elem => elem.userId == userId);
+            let userDiv = ProjectOverviewView.createUserDiv(userDetails, createdBy);
+            _(ProjectOverviewView.getDomStrings().usersList).append(userDiv);
+            
+            sendMessage(JSON.stringify({
+                messageType: "projectUpdate",
+                projectId : projectId,
+                userId : USERID,
+                description :USERNAME+ " has Added you in Project"
+            }));
+        }
+        else {
+            MainView.showErrorMessage("Oops, Something went wrong ...");
+        }
     }
     MainView.loadStatisticsData();
     return {

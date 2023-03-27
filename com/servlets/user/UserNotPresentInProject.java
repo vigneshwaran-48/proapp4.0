@@ -2,8 +2,6 @@ package com.servlets.user;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -15,7 +13,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.databases.users.RetrieveUser;
-import com.mysql.cj.xdevapi.JsonArray;
 @MultipartConfig
 public class UserNotPresentInProject extends HttpServlet{
     @Override

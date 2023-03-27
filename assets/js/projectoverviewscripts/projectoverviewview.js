@@ -300,16 +300,9 @@ const ProjectOverviewView = (() => {
 
         _(domStrings.singleSearchUserWrapper).innerHTML = "";
         _(domStrings.singleSearchUserWrapper).classList.remove(domStrings.showSingleSearchUserWrapper);
-        console.log(users);
         if(!users.length){
             return;
         }
-        users = users.filter(elem => {
-            let result = JSON.parse(localStorage.projectDetails).users.findIndex(localUsers => {
-                return localUsers.userId == elem.userId;
-            });
-            return result < 0;
-        });
         users.forEach(elem => {
             _(domStrings.singleSearchUserWrapper).classList.add(domStrings.showSingleSearchUserWrapper);
             _(domStrings.singleSearchUserWrapper).append(createSingleSearchUser(elem, projectId));
@@ -335,6 +328,7 @@ const ProjectOverviewView = (() => {
         getDomStrings : getDomStrings,
         renderProjectOverView : renderProjectOverView,
         removeUser : removeUser,
-        renderSearchPeople : renderSearchPeople
+        renderSearchPeople : renderSearchPeople,
+        createUserDiv : createUserDiv
     }
 })();

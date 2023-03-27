@@ -28,15 +28,25 @@ const ProjectOverviewController = (view => {
     } 
 
     let addUserToProjectEvent = event => {
+        event.stopPropagation();
         ProjectController.addUserToProject(event.target.dataset.userId, event.target.dataset.projectId);
+        _(view.getDomStrings().userSearchBar).value = "";
+        _(view.getDomStrings().singleSearchUserWrapper).classList.remove(view.getDomStrings().showSingleSearchUserWrapper);
     }
     let renderSearchPeople = async event => {
         const userInput = event.target.value;
-        if(!userInput.trim()){
+        if(event.keyCode != 8 && !userInput.trim()){
             return;
         }
-        const projectId = JSON.parse(localStorage.projectDetails).id;
-        let users = await sendGetRequest(`/ProApp/user/project/notpresent?projectId=${projectId}&queryString=${userInput}`);
+        const {id, createdBy} = JSON.parse(localStorage.projectDetails);
+        let users;
+        if(createdBy == USERID){
+            users = await sendGetRequest(`/ProApp/user/project/notpresent?projectId=${id}&queryString=${userInput}`);
+        }
+        else {
+            users = await sendGetRequest(`/ProApp/user/getusers/project?id=${id}`);
+            users = users.filter(elem => userInput.length && elem.userName.toLowerCase().includes(userInput.toLowerCase()));
+        }
         view.renderSearchPeople(users);
     }
     //This is for user removing action 
@@ -109,7 +119,7 @@ const ProjectOverviewController = (view => {
         });
 
         //This is for people searching
-        _(view.getDomStrings().userSearchBar).addEventListener("input", renderSearchPeople);
+        _(view.getDomStrings().userSearchBar).addEventListener("keyup", renderSearchPeople);
 
     }
     init();
