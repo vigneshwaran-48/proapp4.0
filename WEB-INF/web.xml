@@ -196,6 +196,29 @@
         <url-pattern>/user/task/status</url-pattern>
     </servlet-mapping>
 
+
+<!-- To get the user which is not present in the project -->
+    <servlet>
+        <servlet-name>UserNotPresent</servlet-name>
+        <servlet-class>com.servlets.user.UserNotPresentInProject</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserNotPresent</servlet-name>
+        <url-pattern>/user/project/notpresent</url-pattern>
+    </servlet-mapping>
+
+    <!-- for adding the user to the project-->
+    <servlet>
+        <servlet-name>AddUsertoProject</servlet-name>
+        <servlet-class>com.servlets.project.AddUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddUsertoProject</servlet-name>
+        <url-pattern>/project/user/add</url-pattern>
+    </servlet-mapping>
+
+
+
     <!-- project add -->
     <servlet>
         <servlet-name>AddProject</servlet-name>
@@ -375,6 +398,8 @@
         <servlet-name>ChangeTaskStatus</servlet-name>
         <url-pattern>/task/user/changestatus</url-pattern>
     </servlet-mapping>
+
+    
 
     <!-- Login Filter -->
     <filter>

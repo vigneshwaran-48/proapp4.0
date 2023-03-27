@@ -24,6 +24,10 @@
 </head>
 
 <body>
+
+    <div class="start-loading-page full-light-theme x-axis-flex">
+        <img src="/ProApp/assets/images/loading.gif"/>
+    </div>
     <button tabindex="-1" type="button" class="audio-button" style="display:none"></button>
     <div class="error-message-wrapper x-axis-flex full-light-theme">
         <div class="error-symbol x-axis-flex"><i class="fa-regular fa-circle-xmark"></i></div>
@@ -63,19 +67,19 @@
                     d="M5.5 2h6.559a2 2 0 0 1 1.897 1.368L14.5 5h7c1.105 0 2 .831 2 1.857v9.286c0 1.026-.895 1.857-2 1.857h-1v1.143c0 1.026-.895 1.857-2 1.857h-16c-1.105 0-2-.831-2-1.857V9.857c0-.142.017-.28.05-.413A2.007 2.007 0 0 1 .5 9V7a2 2 0 0 1 2-2h1V4a2 2 0 0 1 2-2Zm0 3H5V4a.5.5 0 0 1 .5-.5h6.559a.5.5 0 0 1 .474.342L13 5.5l.266 1H21.5c.3 0 .5.186.5.357v9.286c0 .171-.2.357-.5.357h-1V9.857c0-1.026-.895-1.857-2-1.857h-7l-.544-1.632A2 2 0 0 0 9.058 5H5.5Zm2.4 1.5H2.5A.5.5 0 0 0 2 7v1.059A2.15 2.15 0 0 1 2.5 8h7.419l-.386-1.158a.5.5 0 0 0-.475-.342H7.9Zm-5.4 3c-.3 0-.5.186-.5.357v9.286c0 .171.2.357.5.357h16c.3 0 .5-.186.5-.357V9.857c0-.171-.2-.357-.5-.357h-16Z"
                     fill="currentColor"></path>
             </svg>
-            <p class="icon-label">Projects</p>
+            <span class="tool-tip light-theme">Projects</span>
         </div>
         <div class="common-i-tag icons-wrapper task-section-button y-axis-flex">
             <i  tabindex="-1"  class="fa-regular fa-circle-check"></i>
-            <p class="icon-label">Tasks</p>
+            <span class="tool-tip light-theme">Tasks</span>
         </div>
-        <div class="common-i-tag icons-wrapper chat-section-button y-axis-flex">
+        <div class="common-i-tag icons-wrapper chat-section-button y-axis-flex" >
             <i  tabindex="-1" class="fa-regular fa-message"></i>
-            <p class="icon-label">Chat</p>
+            <span class="tool-tip light-theme">Chat</span>
         </div>
         <div class="common-i-tag icons-wrapper deprecated-section-button y-axis-flex">
             <i  tabindex="-1" class="fa-regular fa-calendar-xmark"></i>
-            <pre class="icon-label">Overdue</pre>
+            <span class="tool-tip light-theme">Overdue</span>
         </div>
 
     </section>
@@ -260,8 +264,25 @@
                                                 <i class="fa-solid fa-magnifying-glass"></i>
                                             </label>
                                             <input type="search" id="project-overview-users-body-search"/>
+                                            <div class="project-overview-users-body-search-results full-light-theme">
+                                                <div class="project-overview-users-body-search-results-user x-axis-flex">
+                                                    <div class="project-overview-users-body-search-results-user-image"></div>
+                                                    <p>Vicky</p>
+                                                    <button class="common-button project-overview-users-body-search-results-user-add-button">Add</button>
+                                                </div>
+                                                <div class="project-overview-users-body-search-results-user x-axis-flex">
+                                                    <div class="project-overview-users-body-search-results-user-image"></div>
+                                                    <p>Vicky</p>
+                                                    <button class="common-button project-overview-users-body-search-results-user-add-button">Add</button>
+                                                </div>
+                                                <div class="project-overview-users-body-search-results-user x-axis-flex">
+                                                    <div class="project-overview-users-body-search-results-user-image"></div>
+                                                    <p>Vicky</p>
+                                                    <button class="common-button project-overview-users-body-search-results-user-add-button">Add</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <button type="button" class="common-button project-overview-user-add-button">Add</button>
+                                        <!-- <button type="button" class="common-button project-overview-user-add-button">Add</button> -->
                                     </div>
                                     <div class="project-overview-users-body-users-list full-light-theme y-axis-flex">
                                         <div class="single-project-overview-user x-axis-flex light-theme">

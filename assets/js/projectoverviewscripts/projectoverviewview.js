@@ -32,7 +32,13 @@ const ProjectOverviewView = (() => {
         userDeleteSpan : "single-project-overview-user-delete-button",
         userDeleteIcon : ["fa-solid", "fa-trash"],
         userChatButton : "project-overview-chat-button",
-        usersList : ".project-overview-users-body-users-list"
+        usersList : ".project-overview-users-body-users-list",
+        userSearchBar : "#project-overview-users-body-search",
+        singleSearchUserWrapper : ".project-overview-users-body-search-results",
+        singleSearchUser : "project-overview-users-body-search-results-user",
+        singleSearchUserImage : "project-overview-users-body-search-results-user-image",
+        singleSearchUserAdd : "project-overview-users-body-search-results-user-add-button",
+        showSingleSearchUserWrapper : "show-project-people-add-results"
     }
 
     const getDomStrings = () => domStrings;
@@ -264,6 +270,52 @@ const ProjectOverviewView = (() => {
         });
     }
 
+    const createSingleSearchUser = (userDetails, projectId) => {
+        let userDiv = document.createElement("div");
+        let userImage = document.createElement("div");
+        let userName = document.createElement("p");
+        let userAddButton = document.createElement("button");
+
+        userDiv.classList.add(domStrings.singleSearchUser);
+        userDiv.classList.add("x-axis-flex");
+        userImage.classList.add(domStrings.singleSearchUserImage);
+        userAddButton.classList.add("common-button");
+        userAddButton.classList.add(domStrings.singleSearchUserAdd);
+
+        userName.textContent = userDetails.userName;
+        userImage.style.backgroundImage = `/ProApp/assets/images/usersImages/${userDetails.imagePath}`;
+        userAddButton.dataset.userId = userDetails.userId;
+        userAddButton.dataset.projectId = projectId;
+        userAddButton.textContent = "Add";
+
+        userAddButton.addEventListener("click", ProjectOverviewController.addUserToProjectEvent);
+
+        userDiv.append(userImage, userName, userAddButton);
+        return userDiv;
+    }
+
+
+    const renderSearchPeople = users => {
+        let projectId = _(domStrings.usersList).dataset.currentProjectId;
+
+        _(domStrings.singleSearchUserWrapper).innerHTML = "";
+        _(domStrings.singleSearchUserWrapper).classList.remove(domStrings.showSingleSearchUserWrapper);
+        console.log(users);
+        if(!users.length){
+            return;
+        }
+        users = users.filter(elem => {
+            let result = JSON.parse(localStorage.projectDetails).users.findIndex(localUsers => {
+                return localUsers.userId == elem.userId;
+            });
+            return result < 0;
+        });
+        users.forEach(elem => {
+            _(domStrings.singleSearchUserWrapper).classList.add(domStrings.showSingleSearchUserWrapper);
+            _(domStrings.singleSearchUserWrapper).append(createSingleSearchUser(elem, projectId));
+        });
+
+    }
     const removeUser = userId => {
         Array.from(_(domStrings.usersList).children).forEach(elem => {
             elem.id.slice(25) == userId ? elem.remove() : 0;
@@ -271,6 +323,7 @@ const ProjectOverviewView = (() => {
     }
     
     const renderProjectOverView = projectDetails => {
+        localStorage.projectDetails = JSON.stringify(projectDetails);
         renderProjectDetails(projectDetails);
         renderProjectStatsSection(projectDetails);
         renderProjectDeadLineTasks(projectDetails);
@@ -281,6 +334,7 @@ const ProjectOverviewView = (() => {
     return {
         getDomStrings : getDomStrings,
         renderProjectOverView : renderProjectOverView,
-        removeUser : removeUser
+        removeUser : removeUser,
+        renderSearchPeople : renderSearchPeople
     }
 })();

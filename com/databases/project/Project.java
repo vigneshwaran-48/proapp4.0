@@ -93,4 +93,16 @@ public class Project {
         }
         return result;
     }
+    public boolean addUserToProject(Connection con,int pid,int uid) {
+        boolean result=false;
+        try {
+            Statement stmt=con.createStatement();
+            stmt.executeUpdate("insert into project_relation values("+pid+","+uid+")");
+            result=true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+   
 }

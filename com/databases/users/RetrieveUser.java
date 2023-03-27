@@ -1,6 +1,7 @@
 package com.databases.users;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletRequest;
@@ -143,7 +144,7 @@ public class RetrieveUser {
      * @param c This is used to connect to DB
      * @return return JSONArray contains all user details
      */
-    public JSONArray getAllUser(Connection c,HttpServletRequest request) {
+    public JSONArray getAllActiveUsers(Connection c,HttpServletRequest request) {
         JSONArray jsonArray=new JSONArray();
         try {
             ResultSet rs;
@@ -219,4 +220,67 @@ public class RetrieveUser {
         }
         return apiKey;
     }
+
+
+    //this for internal user to get all the userin the db
+    private ArrayList<Integer> getAllUsersUid(Connection c) {
+        ArrayList<Integer> users=new ArrayList<>();
+        try {
+            Statement stmt=c.createStatement();
+            ResultSet rs=stmt.executeQuery("select uid from users");
+            while (rs.next()) {
+                // users.add(rs.getInt(("uid")));
+                users.add(rs.getInt("uid"));
+            }
+
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    private JSONObject getSingleUserDetails(Connection con,int uid) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            ResultSet rs;
+            Statement statement = con.createStatement();
+            rs = statement.executeQuery("select uid,uname,imagePath from users where uid=" + uid);
+            rs.next();
+            jsonObject.put("userId", rs.getInt("uid"));
+            jsonObject.put("userName", rs.getString("uname"));
+            jsonObject.put("imagePath", rs.getString("imagePath"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+
+    public JSONArray usersNotPresentInProject(Connection con,int pid) {
+        JSONArray resultArray=new JSONArray();
+        try {
+            Statement stmt=con.createStatement();
+            ArrayList<Integer> users=new RetrieveUser().getAllUsersUid(con);
+            ArrayList<Integer> tempUser=new ArrayList<>();
+            ResultSet rs=stmt.executeQuery("select uid from project_relation inner join projects on project_relation.pid=projects.pid where projects.pid="+pid);   
+            while (rs.next()) {
+                int uid=rs.getInt("uid");
+                tempUser.add(uid); 
+            }         
+            users.removeAll(tempUser);
+            for (Integer user : users) {
+                resultArray.add(new RetrieveUser().getSingleUserDetails(con, user));
+            }
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return resultArray;
+    }
+
+
+
 }

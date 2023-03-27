@@ -49,10 +49,19 @@ let ProjectController = ((view, model) => {
             MainView.showErrorMessage("Oops, something went wrong");
         }
     }
+
+    let addUserToProject = (userId, projectId) => {
+        let formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("projectId", projectId);
+
+        sendPostRequest("/ProApp/project/user/add", formData);
+    }
     MainView.loadStatisticsData();
     return {
         addProject : addProject,
         deleteProject : deleteProject,
-        exitProject : exitProject
+        exitProject : exitProject,
+        addUserToProject : addUserToProject
     }
 })(ProjectView, ProjectModel);

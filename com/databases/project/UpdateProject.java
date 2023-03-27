@@ -3,11 +3,13 @@
 package com.databases.project;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.databases.task.UpdateTask;
+import com.databases.users.RetrieveUser;
 
 /**
  * This class contains methods to update project details
@@ -102,4 +104,6 @@ public class UpdateProject {
         }
         return result;
     }
-}
+
+
+    }

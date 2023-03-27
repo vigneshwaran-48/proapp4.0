@@ -25,6 +25,19 @@ const ProjectOverviewController = (view => {
                 elem.classList.remove(MainView.getDomStrings().showFromRightToLeft);
             }
         })
+    } 
+
+    let addUserToProjectEvent = event => {
+        ProjectController.addUserToProject(event.target.dataset.userId, event.target.dataset.projectId);
+    }
+    let renderSearchPeople = async event => {
+        const userInput = event.target.value;
+        if(!userInput.trim()){
+            return;
+        }
+        const projectId = JSON.parse(localStorage.projectDetails).id;
+        let users = await sendGetRequest(`/ProApp/user/project/notpresent?projectId=${projectId}&queryString=${userInput}`);
+        view.renderSearchPeople(users);
     }
     //This is for user removing action 
     let removeUser = async userId => {
@@ -95,11 +108,15 @@ const ProjectOverviewController = (view => {
             _(view.getDomStrings().usersSection).classList.add(MainView.getDomStrings().showFromRightToLeft);
         });
 
+        //This is for people searching
+        _(view.getDomStrings().userSearchBar).addEventListener("input", renderSearchPeople);
+
     }
     init();
 
     return {
         removeUser : removeUser,
-        openChatOfUser : openChatOfUser
+        openChatOfUser : openChatOfUser,
+        addUserToProjectEvent : addUserToProjectEvent
     }
 })(ProjectOverviewView);

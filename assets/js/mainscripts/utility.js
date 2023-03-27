@@ -11,6 +11,13 @@ document.addEventListener("keydown", event => {
     }
 });
 
+//This is for closing starting loading page 
+setTimeout(() => {
+    _(".start-loading-page").remove();
+    _(".side-nav-bar").classList.add("show-from-opacity");
+    _(".middle-main-section").classList.add("show-from-opacity");
+}, 1500);
+
 //This listener is for autoclosing a element if another element is clicked
 document.addEventListener("click", event => {
     
