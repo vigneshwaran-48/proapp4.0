@@ -1,7 +1,6 @@
 const ProjectOverviewController = (view => {
 
     let resetCurrentSection = currentSectionButton => {
-        console.log(currentSectionButton);
         let detailsSection = _(view.getDomStrings().detailsSectionButton);
         let taskSection = _(view.getDomStrings().taskSectionButton);
         let usersSection = _(view.getDomStrings().usersSectionButton);
@@ -14,7 +13,6 @@ const ProjectOverviewController = (view => {
         });
     }   
     let resetSections = currentSection => {
-        console.log(currentSection);
         let detailsSection = _(view.getDomStrings().detailsSection);
         let tasksSection = _(view.getDomStrings().taskSection);
         let usersSection = _(view.getDomStrings().usersSection);

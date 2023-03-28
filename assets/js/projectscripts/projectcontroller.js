@@ -59,7 +59,7 @@ let ProjectController = ((view, model) => {
         if(response.status){
             MainView.showSuccessMessage("User added to Project successfully");
             const {users, createdBy} = model.getDataById(projectId);
-            let userDetails = users.find(elem => elem.userId == userId);
+            const userDetails = await sendGetRequest(`/ProApp/user/getusers?id=${userId}`);
             let userDiv = ProjectOverviewView.createUserDiv(userDetails, createdBy);
             _(ProjectOverviewView.getDomStrings().usersList).append(userDiv);
             

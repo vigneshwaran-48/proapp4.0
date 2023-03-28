@@ -163,7 +163,6 @@ const ProjectOverviewView = (() => {
 
     const renderTasks = async projectDetails => {
         const tasks = await sendGetRequest("task/getby-pid?projectId=" + projectDetails.id + "&userId=" + USERID);
-        console.log(tasks);
         _(domStrings.tasksWrapper).innerHTML = "";
         tasks.forEach(task => {
             //Creating elements for a single task starts here
@@ -274,23 +273,30 @@ const ProjectOverviewView = (() => {
         let userDiv = document.createElement("div");
         let userImage = document.createElement("div");
         let userName = document.createElement("p");
-        let userAddButton = document.createElement("button");
+        
 
         userDiv.classList.add(domStrings.singleSearchUser);
         userDiv.classList.add("x-axis-flex");
         userImage.classList.add(domStrings.singleSearchUserImage);
-        userAddButton.classList.add("common-button");
-        userAddButton.classList.add(domStrings.singleSearchUserAdd);
+        
 
         userName.textContent = userDetails.userName;
-        userImage.style.backgroundImage = `/ProApp/assets/images/usersImages/${userDetails.imagePath}`;
-        userAddButton.dataset.userId = userDetails.userId;
-        userAddButton.dataset.projectId = projectId;
-        userAddButton.textContent = "Add";
+        userImage.style.backgroundImage = `url(/ProApp/assets/images/usersImages/${userDetails.imagePath})`;
+        
+        userDiv.append(userImage, userName);
 
-        userAddButton.addEventListener("click", ProjectOverviewController.addUserToProjectEvent);
-
-        userDiv.append(userImage, userName, userAddButton);
+        //Adding add button only if the current user is the one created the project
+        if(USERID == ProjectModel.getDataById(projectId).createdBy){
+            let userAddButton = document.createElement("button");
+            userAddButton.classList.add("common-button");
+            userAddButton.classList.add(domStrings.singleSearchUserAdd);
+            userAddButton.dataset.userId = userDetails.userId;
+            userAddButton.dataset.projectId = projectId;
+            userAddButton.textContent = "Add";
+            userAddButton.addEventListener("click", ProjectOverviewController.addUserToProjectEvent);
+            userDiv.append(userAddButton);
+        }
+    
         return userDiv;
     }
 
