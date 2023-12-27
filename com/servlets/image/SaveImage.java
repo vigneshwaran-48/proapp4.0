@@ -18,11 +18,15 @@ import com.databases.Image;
  maxRequestSize = 1024 * 1024 * 100)
  
 public class SaveImage extends HttpServlet {
+
+    private static final String USER_IMAGES_PATH = "assets/images/usersImages/";
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            String serverHome = getServletContext().getRealPath("/");
             Connection c=(Connection)getServletContext().getAttribute("Connection");
-            String location = "/home/vigneshwaran/ApacheTerminal/apache-tomcat-8.5.86/webapps/ProApp/assets/images/usersImages/";
+            String location = serverHome + USER_IMAGES_PATH;
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("result", new Image().updatePhoto(c, request.getPart("userImage"), Integer.parseInt(request.getParameter("uid")), request.getParameter("imageType"), location));
             response.getWriter().println(jsonObject);   

@@ -20,6 +20,12 @@ setTimeout(() => {
 
 //This listener is for autoclosing a element if another element is clicked
 document.addEventListener("click", event => {
+
+    // Fix for people adding button closing in form
+    if(currentClickedElement.id === "people-adding-input") {
+        currentClickedElement = event.target;
+        return;
+    }
     
     if(currentClickedElement != event.target){
         try{
@@ -90,7 +96,7 @@ let getCurrentUserDetails = async () => {
             _(".big-profile-image").style.backgroundImage = `url(/ProApp/assets/images/usersImages/${CURRENTUSERPHOTO})`;
             _(".top-profile-image-desktop").style.backgroundImage = `url(/ProApp/assets/images/usersImages/${CURRENTUSERPHOTO})`;
             _(".current-user-name").textContent = USERNAME;
-            webSocket = new WebSocket("wss://10.52.0.38:9191/ProApp/chat?uid=" + USERID);
+            webSocket = new WebSocket("wss://localhost:9191/ProApp/chat?uid=" + USERID);
             webSocket.onmessage = (event) => {
                 processMessage(JSON.parse(event.data));
             }
