@@ -16,7 +16,7 @@ public class UsersApiCall {
         JSONArray userArray = new JSONArray();
         try {
             System.out.println(pid + ", -----> " + uid);
-            URL url = new URL("http://localhost:8787/ProApp/user/getusers/project?uid="+uid+"&id="+ pid);// url of the api
+            URL url = new URL("http://localhost:8181/ProApp/user/getusers/project?uid="+uid+"&id="+ pid);// url of the api
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();// opening the url connection using
                                                                                     // the HttpURLConnection class
             connection.setRequestMethod("GET");// setting the request method as GET
@@ -51,7 +51,7 @@ public class UsersApiCall {
     public JSONArray getUsersByTaskId(Long tid,Long uid) {
         JSONArray userArray = new JSONArray();
         try {
-            URL url = new URL("http://localhost:8787/ProApp/user/getusers/task?uid="+uid+ "&id=" + tid);// url of the api
+            URL url = new URL("http://localhost:8181/ProApp/user/getusers/task?uid="+uid+ "&id=" + tid);// url of the api
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();// opening the url connection using
                                                                                     // the HttpURLConnection class
             connection.setRequestMethod("GET");// setting the request method as GET

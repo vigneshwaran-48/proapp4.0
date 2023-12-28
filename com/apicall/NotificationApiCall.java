@@ -11,7 +11,7 @@ public class NotificationApiCall {
     public static JSONObject addNotificationApiCall(JSONObject jsonObject) {
         try {
             String data = "notificationData=" + jsonObject.toJSONString();
-            URL url = new URL("http://localhost:8787/ProApp/notification/add");
+            URL url = new URL("http://localhost:8181/ProApp/notification/add");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();                                             
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
