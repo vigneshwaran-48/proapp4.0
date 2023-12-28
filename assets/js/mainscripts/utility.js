@@ -22,7 +22,7 @@ setTimeout(() => {
 document.addEventListener("click", event => {
 
     // Fix for people adding button closing in form
-    if(currentClickedElement.id === "people-adding-input") {
+    if(currentClickedElement.id === "people-adding-input" || currentClickedElement.id === "people-edit-input") {
         currentClickedElement = event.target;
         return;
     }
